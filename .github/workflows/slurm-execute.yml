@@ -28,4 +28,8 @@ jobs:
           SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
       - uses: actions/checkout@v3
       - name: Execute
-        run: cat ./.github/workflows/slurm-execute.sh | ssh slurm
+        run: (export -p; cat ./.github/workflows/slurm-execute.sh) | ssh slurm 'bash -s'
+        env:
+          TAG: ${{ github.ref_name }}
+          TARGET_TMP_DIR: ${{ secrets.SLURM_TMP }}
+          REPO_URL: ${{ github.repositoryUrl }}
