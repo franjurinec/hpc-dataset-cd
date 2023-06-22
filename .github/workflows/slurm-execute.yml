@@ -32,4 +32,4 @@ jobs:
         env:
           TAG: ${{ github.ref_name }}
           TARGET_TMP_DIR: ${{ secrets.SLURM_TMP }}
-          REPO_URL: ${{ github.repositoryUrl }}
+          REPO_URL: ${{ github.repository }}
