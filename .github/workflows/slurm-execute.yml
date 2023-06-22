@@ -1,0 +1,28 @@
+name: Execute Workflow on SLURM
+on:
+  push:
+    tags:
+    - '*'
+jobs:
+  execute:
+    name: Execute on SLURM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/slurm.key
+          chmod 600 ~/.ssh/slurm.key
+          cat >>~/.ssh/config <<END
+          Host slurm
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/slurm.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SLURM_USER }}
+          SSH_KEY: ${{ secrets.SLURM_SSH_KEY }}
+          SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
+      - name: Test
+        run: ssh slurm 'echo Hello world!'
