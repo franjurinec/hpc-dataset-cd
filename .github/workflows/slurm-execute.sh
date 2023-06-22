@@ -5,4 +5,4 @@ cd $TARGET_TMP_DIR/$TAG_SLUG
 
 # EXECUTE sbatch
 
-rm -r $TARGET_TMP_DIR/$TAG_SLUG -y
+rm -rf $TARGET_TMP_DIR/$TAG_SLUG
