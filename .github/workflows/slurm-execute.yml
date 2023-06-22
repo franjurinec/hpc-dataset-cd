@@ -26,7 +26,6 @@ jobs:
           SSH_USER: ${{ secrets.SLURM_USER }}
           SSH_KEY: ${{ secrets.SLURM_SSH_KEY }}
           SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
-      - run: pwd
-      - run: ls -a
-      - name: Test
-        run: cat slurm-execute.sh | ssh slurm
+      - uses: actions/checkout@v3
+      - name: Execute
+        run: ssh slurm "$(< ./.github/workflows/slurm-execute.sh)"
