@@ -28,4 +28,4 @@ jobs:
           SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
       - uses: actions/checkout@v3
       - name: Execute
-        run: ssh slurm "$(< ./.github/workflows/slurm-execute.sh)"
+        run: cat ./.github/workflows/slurm-execute.sh | ssh slurm
