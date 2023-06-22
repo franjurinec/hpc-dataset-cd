@@ -27,4 +27,4 @@ jobs:
           SSH_KEY: ${{ secrets.SLURM_SSH_KEY }}
           SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
       - name: Test
-        run: ssh slurm 'echo Hello world!'
+        run: ssh slurm "$(< ./.github/workflows/slurm-execute.sh)"
