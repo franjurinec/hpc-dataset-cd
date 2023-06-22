@@ -19,6 +19,7 @@ jobs:
             User $SSH_USER
             IdentityFile ~/.ssh/slurm.key
             StrictHostKeyChecking no
+            ForwardAgent yes
           END
         env:
           SSH_USER: ${{ secrets.SLURM_USER }}
