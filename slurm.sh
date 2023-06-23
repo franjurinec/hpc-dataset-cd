@@ -4,7 +4,7 @@
 #SBATCH --time=00:01:00
 #SBATCH --partition=test
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=10
+#SBATCH --ntasks-per-node=1
 
 module load python-data
 srun python workflow.py
