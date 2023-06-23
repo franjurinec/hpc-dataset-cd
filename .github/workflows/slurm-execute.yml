@@ -28,7 +28,7 @@ jobs:
           SSH_USER: ${{ secrets.SLURM_USER }}
           SSH_KEY: ${{ secrets.SLURM_SSH_KEY }}
           SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
-      - run: ssh -t slurm ps -p $$
+      - run: ssh -t slurm bash -lic "ps -p $$"
       # - name: Configure Target Directory
       #   run: echo "TARGET_DIR=${{ secrets.SLURM_TMP }}/$(echo ${{ github.ref_name }} | iconv -t ascii//TRANSLIT | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       # - name: Download Source Code
