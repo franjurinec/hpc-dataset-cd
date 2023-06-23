@@ -31,7 +31,7 @@ jobs:
       - name: Download Source Code
         run: ssh slurm git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $TARGET_DIR
       - name: Execute
-        run: ssh slurm cd $TARGET_DIR; sbatch --wait slurm.sh
+        run: ssh slurm "cd $TARGET_DIR; sbatch --wait slurm.sh"
       - name: Print Results
         run: ssh slurm cat $TARGET_DIR/*.out
       - name: Cleanup
