@@ -7,4 +7,4 @@
 #SBATCH --ntasks-per-node=10
 
 module load python-data
-srun workflow.py
+srun python workflow.py
