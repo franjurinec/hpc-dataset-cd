@@ -10,4 +10,4 @@ sbatch --wait slurm.sh
 cat *.out
 
 # Cleanup
-rm -rf $TARGET_TMP_DIR/$TAG_SLUG
+# rm -rf $TARGET_TMP_DIR/$TAG_SLUG
