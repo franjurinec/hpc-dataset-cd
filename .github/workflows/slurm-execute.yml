@@ -1,6 +1,8 @@
 name: Execute Workflow on SLURM
 on:
   push:
+    branches:
+      - main
     tags:
     - '*'
 jobs:
