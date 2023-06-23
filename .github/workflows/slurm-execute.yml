@@ -35,6 +35,7 @@ jobs:
       - name: Execute
         run: ssh slurm sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
       - name: Print Results
+        if: success() || failure()
         run: ssh slurm cat $TARGET_DIR/*.out
       - name: Cleanup
         if: success() || failure()
