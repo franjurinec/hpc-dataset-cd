@@ -4,6 +4,6 @@ git clone --depth 1 --branch $TAG https://github.com/$REPO.git $TARGET_TMP_DIR/$
 cd $TARGET_TMP_DIR/$TAG_SLUG
 
 # EXECUTE WORKFLOW
-
+sbatch slurm.sh
 
 rm -rf $TARGET_TMP_DIR/$TAG_SLUG
