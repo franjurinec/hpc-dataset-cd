@@ -26,10 +26,14 @@ jobs:
           SSH_USER: ${{ secrets.SLURM_USER }}
           SSH_KEY: ${{ secrets.SLURM_SSH_KEY }}
           SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
-      - uses: actions/checkout@v3
-      - name: Execute
-        run: (export -p; cat ./.github/workflows/slurm-execute.sh) | ssh slurm 'bash -s'
-        env:
-          TAG: ${{ github.ref_name }}
-          TARGET_TMP_DIR: ${{ secrets.SLURM_TMP }}
-          REPO: ${{ github.repository }}
+      - name: Configure Target Directory
+        run: export TARGET_DIR=${{ secrets.SLURM_TMP }}/$(echo ${{ github.ref_name }} | iconv -t ascii//TRANSLIT | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
+      - run: ssh slurm 'echo $TARGET_DIR'
+      # - name: Download Source Code
+      #   run: ssh slurm 'git clone --depth 1 --branch $TAG https://github.com/$REPO.git '
+      # - name: Execute
+      #   run: ssh slurm 'sbatch --wait $TARGET_DIR/slurm.sh'
+      # - name: Print Results
+      #   run: ssh slurm 'cat *.out'
+      # - name: Cleanup
+      #   run: ssh slurm 'rm -rf .'
