@@ -29,10 +29,10 @@ jobs:
       - name: Configure Target Directory
         run: echo "TARGET_DIR=${{ secrets.SLURM_TMP }}/$(echo ${{ github.ref_name }} | iconv -t ascii//TRANSLIT | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       - name: Download Source Code
-        run: ssh slurm git clone --depth 1 --branch $TAG https://github.com/$REPO.git
+        run: ssh slurm git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $TARGET_DIR
       - name: Execute
         run: ssh slurm sbatch --wait $TARGET_DIR/slurm.sh
       - name: Print Results
-        run: ssh slurm cat *.out
+        run: ssh slurm cat $TARGET_DIR/*.out
       - name: Cleanup
-        run: ssh slurm rm -rf .
+        run: ssh slurm rm -rf $TARGET_DIR
