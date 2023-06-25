@@ -30,15 +30,13 @@ jobs:
           SSH_HOST: ${{ secrets.SLURM_LOGIN_HOST }}
       - name: Configure Target Directory
         run: echo "TARGET_DIR=${{ secrets.SLURM_TMP }}/$(echo ${{ github.ref_name }} | iconv -t ascii//TRANSLIT | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      - name: Test CSC Env
-        run: ssh slurm csc-env test
-      # - name: Download Source Code
-      #   run: ssh slurm git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $TARGET_DIR
-      # - name: Execute
-      #   run: echo sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh | ssh slurm /bin/bash
-      # - name: Print Results
-      #   if: success() || failure()
-      #   run: ssh slurm cat $TARGET_DIR/*.out
-      # - name: Cleanup
-      #   if: success() || failure()
-      #   run: ssh slurm rm -rf $TARGET_DIR
+      - name: Download Source Code
+        run: ssh slurm git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $TARGET_DIR
+      - name: Execute
+        run: ssh slurm -t sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
+      - name: Print Results
+        if: success() || failure()
+        run: ssh slurm cat $TARGET_DIR/*.out
+      - name: Cleanup
+        if: success() || failure()
+        run: ssh slurm rm -rf $TARGET_DIR
