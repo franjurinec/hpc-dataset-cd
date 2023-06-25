@@ -33,7 +33,7 @@ jobs:
       - name: Download Source Code
         run: ssh slurm git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $TARGET_DIR
       - name: Execute
-        run: ssh slurm -tt batch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
+        run: ssh slurm -tt sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
       - name: Print Results
         if: success() || failure()
         run: ssh slurm cat $TARGET_DIR/*.out
