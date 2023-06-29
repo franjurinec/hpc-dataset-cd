@@ -1,44 +1,26 @@
-import sys
-from dask_jobqueue import SLURMCluster
-from dask.distributed import Client
-from dask import delayed
-from dask import compute
+# Define list of pulses
+# Define list of signals
+# Define other author/dataset metadata
+PULSE_LIST = [81768,81798,85306,92207, 95479]
+SIGNAL_DICT = {
+    'efit': ['Rgeo', 'ahor', 'Vol', 'delRoben', 'delRuntn', 'k'],
+    'power': ['P_OH', 'PNBI_TOT', 'PICR_TOT'], 
+    'magn': ['IpiFP', 'BTF', 'q95'],
+    'gas': ['D_tot'],
+    'hrts': ['radius', 'ne', 'ne_unc', 'Te', 'Te_unc']  
+}
+METADATA = {}
 
-### Input arguments
-project_name = sys.argv[1]
-num_of_worker_jobs = sys.argv[2]
+# Collect source data - pulse list x chosen signals (wrapped dat access call) + data dump (data input dir) + metadata dump (metadata output dir)
+collected_pulses = collect_pulses(PULSE_LIST, SIGNAL_DICT)
 
-### Create the SLURMCluster and define what resources to ask for each of the worker job. 
-### Notice the local_directory and python, python path must be adjusted to used module.
-### To find out Python path, run: 
-### module load xx
-### which python
+# Data transformation - transform function x each collected pulse (data input dir -> data output dir) + metadata dump (metadata output dir)
+for pulse in collected_pulses:
+    pulse_transformed = transform(pulse)
+    save_output(pulse_transformed)
 
-cluster = SLURMCluster(
-    queue = "test",
-    account = "project_2005083",
-    cores = 1,
-    memory = "2GB",
-    walltime = "00:10:00",
-    interface = 'ib0',
-    local_directory = "/scratch/project_2005083/fran-testing/tmp",
-    python = "/appl/soft/ai/tykky/python-data-2022-09/bin/python"
-)
+# Data/metadata submission - S3 API (data output dir -> remote S3) + InvenioRDM API (metadata output dir -> InvenioRDM record)
+if producion_env: # Only upload data / metadata in production env
+    submit()
 
-### This launches the cluster (submits the worker jobs)
-cluster.scale(4)
-client = Client(cluster)
-
-list_of_delayed_functions = []
-datasets =['/data/dataset1','/data/dataset2','/data/dataset3','/data/dataset4']
-
-def processDataset(dataset):
-    ### Do something to the dataset 
-    results = dataset
-    return results
-
-for dataset in datasets:
-    list_of_delayed_functions.append(delayed(processDataset)(dataset))
-
-### This starts the execution with the resources available
-compute(list_of_delayed_functions)
+print('Hello world!') # Sanity check
