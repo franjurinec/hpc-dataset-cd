@@ -106,3 +106,6 @@ for pulse_id in PULSE_LIST:
     pulse_transformed = convert_pulse_dict_to_numpy_array(pulse)
     for key, value in pulse_transformed.items():
         np.save(f'./tmp/out/{pulse_id}_{key}.npy', value)
+
+print('Hello world!')
+print(os.getcwd())
