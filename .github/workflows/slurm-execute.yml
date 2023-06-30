@@ -34,8 +34,8 @@ jobs:
         run: ssh slurm -tt "module load python-data; pip install -r $TARGET_DIR/requirements.txt --user"
       - name: Transfer Env
         run: |
-          ssh slurm echo S3_KEY=$S3_KEY >> $TARGET_DIR/.env
-          ssh slurm echo S3_PASS=$S3_PASS >> $TARGET_DIR/.env
+          ssh slurm "echo S3_KEY=$S3_KEY >> $TARGET_DIR/.env"
+          ssh slurm "echo S3_PASS=$S3_PASS >> $TARGET_DIR/.env"
           ssh slurm cat $TARGET_DIR/.env
       - name: Execute
         run: ssh slurm -tt sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
