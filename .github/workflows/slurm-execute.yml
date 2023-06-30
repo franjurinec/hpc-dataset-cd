@@ -35,6 +35,8 @@ jobs:
       - name: Print Results
         if: success() || failure()
         run: ssh slurm cat $TARGET_DIR/*.out
+      - name: Check Data Output
+        run: ls ./tmp/out
       - name: Cleanup
         if: success() || failure()
         run: ssh slurm rm -rf $TARGET_DIR
