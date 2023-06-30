@@ -5,8 +5,8 @@ from scipy.interpolate import interp1d
 from typing import List
 
 # Load .env variables
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 PULSE_LIST = [81768,81798,85306,92207, 95479]
 SIGNAL_DICT = {

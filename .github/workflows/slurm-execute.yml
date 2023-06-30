@@ -30,6 +30,8 @@ jobs:
         run: echo "TARGET_DIR=${{ secrets.SLURM_TMP }}/$(echo ${{ github.ref_name }} | iconv -t ascii//TRANSLIT | sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       - name: Download Source Code
         run: ssh slurm git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $TARGET_DIR
+      - name: Install Packages
+        run: ssh slurm -tt "module load python-data; pip install -r $TARGET_DIR/requirements.txt --user"
       - name: Execute
         run: ssh slurm -tt sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
       - name: Print Results
