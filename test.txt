@@ -1,2 +1,0 @@
-test\ntest2
-test\ntest2 -e
