@@ -98,7 +98,12 @@ def convert_pulse_dict_to_numpy_array(pulse_dict):
     final_dict = {'MPS': relevant_machine_parameters, 'PROFS': relevant_profs, 'RADII': relevant_radii, 'TIME': relevant_time_windows}
     return final_dict
 
-os.makedirs(os.path.join(os.getcwd(), '/tmp/out/'), exist_ok=True)
+
+
+print('Hello world!')
+base_dir = os.getcwd()
+print(base_dir)
+os.makedirs(os.path.join(base_dir, '/tmp/out/'), exist_ok=True)
 for pulse_id in PULSE_LIST:
     pulse = get_pulse(pulse_id, SIGNAL_DICT)
     if pulse is None:
@@ -106,9 +111,9 @@ for pulse_id in PULSE_LIST:
         continue
     pulse_transformed = convert_pulse_dict_to_numpy_array(pulse)
     for key, value in pulse_transformed.items():
-        result_path = os.path.join(os.getcwd(), '/tmp/out/', f'{pulse_id}_{key}.npy')
+        print(os.getcwd())
+        result_path = os.path.join(base_dir, '/tmp/out/', f'{pulse_id}_{key}.npy')
         print(f'Saving {result_path}')
         np.save(result_path, value)
 
-print('Hello world!')
-print(os.getcwd())
+
