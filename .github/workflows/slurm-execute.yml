@@ -32,7 +32,7 @@ jobs:
         run: ssh slurm git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $TARGET_DIR
       - name: Install Packages
         run: ssh slurm -tt "module load python-data; pip install -r $TARGET_DIR/requirements.txt --user"
-        name: Transfer Env
+      - name: Transfer Env
         run: |
           ssh slurm echo S3_KEY=$S3_KEY >> $TARGET_DIR/.env
           ssh slurm echo S3_PASS=$S3_PASS >> $TARGET_DIR/.env
