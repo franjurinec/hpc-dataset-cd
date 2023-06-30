@@ -1,3 +1,8 @@
+import os
+from services.data_access import get_pulse
+import services.s3 as s3
+import services.invenio as invenio
+
 # Define list of pulses
 # Define list of signals
 # Define other author/dataset metadata
@@ -11,16 +16,18 @@ SIGNAL_DICT = {
 }
 METADATA = {}
 
-# Collect source data - pulse list x chosen signals (wrapped dat access call) + data dump (data input dir) + metadata dump (metadata output dir)
-collected_pulses = collect_pulses(PULSE_LIST, SIGNAL_DICT)
+def transform(pulse):
+    return {}
 
 # Data transformation - transform function x each collected pulse (data input dir -> data output dir) + metadata dump (metadata output dir)
-for pulse in collected_pulses:
+for pulse_id in PULSE_LIST:
+    pulse = get_pulse(pulse_id, SIGNAL_DICT)
     pulse_transformed = transform(pulse)
-    save_output(pulse_transformed)
+    # fs.save(pulse_transformed)
 
 # Data/metadata submission - S3 API (data output dir -> remote S3) + InvenioRDM API (metadata output dir -> InvenioRDM record)
-if producion_env: # Only upload data / metadata in production env
-    submit()
+if os.environ['MODE'] == 'production': # Only upload data / metadata in production env
+    s3.upload_outputs()
+    invenio.submit_record()
 
 print('Hello world!') # Sanity check
