@@ -47,6 +47,6 @@ jobs:
         run: ssh slurm cat $TARGET_DIR/*.out
       - name: Check Data Output
         run: ls $TARGET_DIR/tmp/out
-      - name: Cleanup
-        if: success() || failure()
-        run: ssh slurm rm -rf $TARGET_DIR
+      # - name: Cleanup
+      #   if: success() || failure()
+      #   run: ssh slurm rm -rf $TARGET_DIR
