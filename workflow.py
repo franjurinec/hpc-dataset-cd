@@ -102,9 +102,11 @@ os.makedirs('./tmp/out', exist_ok=True)
 for pulse_id in PULSE_LIST:
     pulse = get_pulse(pulse_id, SIGNAL_DICT)
     if pulse is None:
+        print(f'Skipping {pulse_id}')
         continue
     pulse_transformed = convert_pulse_dict_to_numpy_array(pulse)
     for key, value in pulse_transformed.items():
+        print(f'Saving ./tmp/out/{pulse_id}_{key}.npy')
         np.save(f'./tmp/out/{pulse_id}_{key}.npy', value)
 
 print('Hello world!')
