@@ -33,7 +33,7 @@ jobs:
       - name: Install Packages
         run: ssh slurm -tt "module load python-data; pip install -r $TARGET_DIR/requirements.txt --user"
       - name: Execute
-        run: ssh slurm -tt sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
+        run: ssh slurm -tt S3_KEY=$S3_KEY S3_PASS=$S3_PASS sbatch -D $TARGET_DIR --wait $TARGET_DIR/slurm.sh
       - name: Print Results
         if: success() || failure()
         run: ssh slurm cat $TARGET_DIR/*.out
