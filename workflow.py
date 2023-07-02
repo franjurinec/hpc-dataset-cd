@@ -18,7 +18,7 @@ SIGNAL_DICT = {
 METADATA = {}
 BASE_DIR = os.getcwd()
 
-
+# Typically this would be a facility-specific access method
 remote_fs = s3fs.S3FileSystem(
     key=os.getenv('S3_KEY'),
     secret=os.getenv('S3_PASS'),
