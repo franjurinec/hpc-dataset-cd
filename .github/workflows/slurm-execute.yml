@@ -48,7 +48,7 @@ jobs:
       - name: Check Data Output
         run: ssh slurm ls $TARGET_DIR/tmp/out
       - name: Upload Dataset
-        run: ssh slurm -tt OS_PASSWORD=$PASSWORD S3_TARGET="${{ github.run_id }}-${{ github.run_attempt }}" sbatch -D $TARGET_DIR --wait $TARGET_DIR/.github/workflows/slurm-upload.sh
+        run: ssh slurm -tt OS_PASSWORD=$PASSWORD S3_TARGET="GH_DATASETS/${{ github.run_id }}-${{ github.run_attempt }}" sbatch -D $TARGET_DIR --wait $TARGET_DIR/.github/workflows/slurm-upload.sh
         env:
           PASSWORD: ${{ secrets.SLURM_PASS }}
       - name: Cleanup
