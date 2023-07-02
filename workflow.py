@@ -1,9 +1,9 @@
 import os
+from typing import List
 import s3fs
 from dotenv import load_dotenv
 import numpy as np
 from scipy.interpolate import interp1d
-from typing import List
 
 # Load .env variables
 load_dotenv()
