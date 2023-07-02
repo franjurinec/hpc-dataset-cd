@@ -1,11 +1,11 @@
 import os
 import s3fs
+from dotenv import load_dotenv
 import numpy as np
 from scipy.interpolate import interp1d
 from typing import List
 
 # Load .env variables
-from dotenv import load_dotenv
 load_dotenv()
 
 PULSE_LIST = [81768,81798,85306,92207, 95479]
@@ -100,9 +100,8 @@ def convert_pulse_dict_to_numpy_array(pulse_dict):
 
 
 
-print('Hello world!')
 base_dir = os.getcwd()
-print(base_dir)
+
 os.makedirs(os.path.join(base_dir, 'tmp/out'), exist_ok=True)
 for pulse_id in PULSE_LIST:
     pulse = get_pulse(pulse_id, SIGNAL_DICT)
