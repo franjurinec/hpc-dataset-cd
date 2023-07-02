@@ -50,11 +50,11 @@ jobs:
       - name: Upload Dataset
         run: |
           ssh slurm -tt \
-          "module load allas; \
-          allas-conf --mode s3cmd; \
-          rclone mkdir s3allas:${{ github.run_id }}-${{ github.run_attempt }}; \
-          rclone copy $TARGET_DIR/tmp/out s3allas:${{ github.run_id }}-${{ github.run_attempt }}; \
-          rclone ls s3allas:${{ github.run_id }}-${{ github.run_attempt }}"
+          "module load allas \
+          && allas-conf --mode s3cmd \
+          && rclone mkdir s3allas:${{ github.run_id }}-${{ github.run_attempt }} \
+          && rclone copy $TARGET_DIR/tmp/out s3allas:${{ github.run_id }}-${{ github.run_attempt }} \
+          && rclone ls s3allas:${{ github.run_id }}-${{ github.run_attempt }}"
       - name: Cleanup
         if: success() || failure()
         run: ssh slurm rm -rf $TARGET_DIR
