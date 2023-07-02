@@ -49,6 +49,6 @@ jobs:
         run: ssh slurm ls $TARGET_DIR/tmp/out
       - name: Upload Dataset
         run: ssh slurm -tt sbatch -D $TARGET_DIR --wait $TARGET_DIR/.github/workflows/slurm-upload.sh
-      - name: Cleanup
-        if: success() || failure()
-        run: ssh slurm rm -rf $TARGET_DIR
+      # - name: Cleanup
+      #   if: success() || failure()
+      #   run: ssh slurm rm -rf $TARGET_DIR

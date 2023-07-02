@@ -7,7 +7,7 @@
 #SBATCH --ntasks-per-node=1
 
 module load allas
-srun allas-conf --mode s3cmd
-srun mkdir s3allas:github-test
-srun rclone copy ./tmp/out s3allas:github-test
-srun rclone ls s3allas:github-test"
+source /appl/opt/csc-tools/allas-cli-utils/allas_conf -f -k --mode s3cmd
+rclone mkdir s3allas:github-test
+rclone copy ./tmp/out s3allas:github-test
+rclone ls s3allas:github-test"
