@@ -3,3 +3,4 @@
 .conda
 .env
 tmp
+__pycache__
