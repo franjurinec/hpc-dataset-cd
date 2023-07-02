@@ -8,6 +8,6 @@
 
 module load allas
 source /appl/opt/csc-tools/allas-cli-utils/allas_conf -f -k --mode s3cmd
-rclone mkdir s3allas:github-test
-rclone copy ./tmp/out s3allas:github-test/data
-rclone ls s3allas:github-test
+rclone mkdir s3allas:$S3_TARGET
+rclone copy ./tmp/out s3allas:$S3_TARGET/data
+rclone ls s3allas:$S3_TARGET
