@@ -51,6 +51,11 @@ jobs:
         run: ssh slurm -tt OS_PASSWORD=$PASSWORD S3_TARGET="GH_DATASETS/${{ github.run_id }}-${{ github.run_attempt }}" sbatch -D $TARGET_DIR --wait $TARGET_DIR/.github/workflows/slurm-upload.sh
         env:
           PASSWORD: ${{ secrets.SLURM_PASS }}
+      - name: Collect Metadata
+        run: |
+          mkdir -p ./tmp/meta
+          scp slurm:$TARGET_DIR/tmp/meta/metadata.json ./tmp/meta
+          cat ./tmp/meta/metadata.json
       - name: Cleanup
         if: success() || failure()
         run: ssh slurm rm -rf $TARGET_DIR
