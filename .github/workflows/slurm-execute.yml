@@ -58,6 +58,10 @@ jobs:
           cat ./tmp/meta/metadata.json
       - name: Create InvenioRDM Record
         run: node ./.github/workflows/invenio-publish.js
+        env:
+          INVENIO_API_URL: https://fusion-platform-test.rahtiapp.fi/
+          INVENIO_API_KEY: ${{ secrets.INVENIO_API_KEY }}
+          ROOT_RECORD: qfeqv-m6q10
       - name: Cleanup
         if: success() || failure()
         run: ssh slurm rm -rf $TARGET_DIR
