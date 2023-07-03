@@ -57,6 +57,6 @@ def get_pulse(shot_number, diagnostic_signal_dict):
 def output_metadata(base_metadata, out_dir):
     metadata = base_metadata
     metadata["source"] = in_meta
-    with open(os.path.join(out_dir, 'tmp/meta', 'metadata.json'), "w", encoding="UTF-8") as meta_file:
+    with open(os.path.join(out_dir, 'metadata.json'), "w", encoding="UTF-8") as meta_file:
         meta_json_object = json.dumps(metadata, indent=4)
         meta_file.write(meta_json_object)
