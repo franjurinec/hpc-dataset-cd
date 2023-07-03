@@ -56,6 +56,8 @@ jobs:
           mkdir -p ./tmp/meta
           scp slurm:$TARGET_DIR/tmp/meta/metadata.json ./tmp/meta
           cat ./tmp/meta/metadata.json
+      - name: Create InvenioRDM Record
+        run: node ./.github/workflows/invenio-publish.js
       - name: Cleanup
         if: success() || failure()
         run: ssh slurm rm -rf $TARGET_DIR
