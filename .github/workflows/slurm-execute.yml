@@ -57,7 +57,7 @@ jobs:
           scp slurm:$TARGET_DIR/tmp/meta/metadata.json ./tmp/meta
           cat ./tmp/meta/metadata.json
       - name: Create InvenioRDM Record
-        uses: franjurinec/invenio-action@v1-rc2
+        uses: franjurinec/invenio-action@v1
         with:
           invenio-url: https://fusion-platform-test.rahtiapp.fi/
           invenio-key: ${{ secrets.INVENIO_API_KEY }}
