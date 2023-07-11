@@ -20,6 +20,8 @@ remote_fs = s3fs.S3FileSystem(
 # Prepare metadata output dir
 META_DIR = os.path.join(os.getcwd(), 'tmp/meta')
 os.makedirs(META_DIR, exist_ok=True)
+os.makedirs(os.path.join(META_DIR, 'in_pulses'), exist_ok=True)
+
 
 # Output base AUG metadata
 with open(os.path.join(META_DIR, 'source_meta.json'), "w", encoding="UTF-8") as source_meta_file:
