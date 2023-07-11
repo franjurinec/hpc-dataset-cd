@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import numpy as np
-from data_helper import get_pulse, output_metadata
+from utils.mock_jet_data_helper import get_pulse
 from data_transform import convert_pulse_dict_to_numpy_array
 
 # Load .env variables
@@ -16,19 +16,10 @@ SIGNAL_DICT = {
     'gas': ['D_tot'],
     'hrts': ['radius', 'ne', 'ne_unc', 'Te', 'Te_unc']  
 }
-METADATA = {
-    "title": "Demo Dataset",
-    "description": "Dataset used to demo a new research data workflow approach.",
-    "authors": [
-        {"name": "Adam", "surname": "Kit"}
-    ],
-}
 
 # Prepare otuput directories for data and metadata
 DATA_DIR = os.path.join(os.getcwd(), 'tmp/out')
 os.makedirs(DATA_DIR, exist_ok=True)
-META_DIR = os.path.join(os.getcwd(), 'tmp/meta')
-os.makedirs(META_DIR, exist_ok=True)
 
 # Execute data tranformations
 for pulse_id in PULSE_LIST:
@@ -41,6 +32,3 @@ for pulse_id in PULSE_LIST:
         result_path = os.path.join(DATA_DIR, f'{pulse_id}_{key}.npy')
         print(f'Saving {result_path}')
         np.save(result_path, value)
-
-# Output metadata.json to metadata directory
-output_metadata(METADATA, META_DIR)

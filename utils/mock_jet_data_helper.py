@@ -8,12 +8,6 @@ from dotenv import load_dotenv
 # Load .env variables
 load_dotenv()
 
-# Data Input Metadata
-in_meta = {
-    "source_facility": "Source Facility",
-    "pulses": {}
-}
-
 # Typically this would be a facility-specific access method
 remote_fs = s3fs.S3FileSystem(
     key=os.getenv('S3_KEY'),
@@ -22,6 +16,18 @@ remote_fs = s3fs.S3FileSystem(
         'endpoint_url': 'https://a3s.fi'
     }
 )
+
+# Prepare metadata output dir
+META_DIR = os.path.join(os.getcwd(), 'tmp/meta')
+os.makedirs(META_DIR, exist_ok=True)
+
+# Output base AUG metadata
+with open(os.path.join(META_DIR, 'source_meta.json'), "w", encoding="UTF-8") as source_meta_file:
+    source_meta = json.dumps({
+        "name": "JET",
+        "website": "https://euro-fusion.org/devices/jet/"
+    }, indent=4)
+    source_meta_file.write(source_meta)
 
 def get_pulse(shot_number, diagnostic_signal_dict):
     pulse_dict = {}
@@ -41,22 +47,20 @@ def get_pulse(shot_number, diagnostic_signal_dict):
                         signal_dict[dimension] = data
                 except FileNotFoundError as _:
                     print(f'Did not find {object_name} in JET_PULSES, not returning Pulse')
-                    in_meta["pulses"][shot_number] = {
+                    output_metadata(shot_number, {
                             'pulse': shot_number, 
                             'success': False
-                            }
+                            }, 'in_pulses')
                     return None
             pulse_dict[signal_name] = signal_dict
-    in_meta["pulses"][shot_number] = {
+    output_metadata(shot_number, {
         'pulse': shot_number, 
         'success': True, 
         'diagnostics': {k:{'signals': v, 'calibration': randint(1,10)} for k, v in diagnostic_signal_dict.items()} 
-        }
+        }, './tmp/meta/in_pulses')
     return pulse_dict
 
-def output_metadata(base_metadata, out_dir):
-    metadata = base_metadata
-    metadata["source"] = in_meta
-    with open(os.path.join(out_dir, 'metadata.json'), "w", encoding="UTF-8") as meta_file:
+def output_metadata(name, metadata, out_dir):
+    with open(os.path.join(META_DIR, out_dir, f'{name}.json'), "w", encoding="UTF-8") as meta_file:
         meta_json_object = json.dumps(metadata, indent=4)
         meta_file.write(meta_json_object)

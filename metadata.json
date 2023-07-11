@@ -1,0 +1,7 @@
+{
+    "title": "Demo Dataset",
+    "description": "Dataset used to demo a new research data workflow approach.",
+    "authors": [
+        {"name": "Adam", "surname": "Kit"}
+    ]
+}
