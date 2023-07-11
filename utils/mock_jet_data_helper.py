@@ -57,7 +57,7 @@ def get_pulse(shot_number, diagnostic_signal_dict):
         'pulse': shot_number, 
         'success': True, 
         'diagnostics': {k:{'signals': v, 'calibration': randint(1,10)} for k, v in diagnostic_signal_dict.items()} 
-        }, './tmp/meta/in_pulses')
+        }, 'in_pulses')
     return pulse_dict
 
 def output_metadata(name, metadata, out_dir):
