@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:  
       - name: Execute
-        uses: franjurinec/mahti-executor-action@0.11
+        uses: franjurinec/mahti-executor-action@0.12
         with:
           mahti-username: ${{ secrets.SLURM_USER }}
           mahti-password: ${{ secrets.SLURM_PASS }}
