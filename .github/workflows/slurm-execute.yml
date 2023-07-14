@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:  
       - name: Execute
-        uses: franjurinec/mahti-executor-action@0.16
+        uses: franjurinec/mahti-executor-action@0.17
         with:
           mahti-username: ${{ secrets.SLURM_USER }}
           mahti-password: ${{ secrets.SLURM_PASS }}
           mahti-base-dir: "/scratch/project_2005083/fran-testing"
           data-source-env: ${{ secrets.SOURCE_ENV }}
           invenio-key: ${{ secrets.INVENIO_API_KEY }}
+          invenio-root-record: qfeqv-m6q10
